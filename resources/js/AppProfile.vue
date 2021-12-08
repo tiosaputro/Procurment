@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-profile" v-if="loggedIn">
 		<div>
-			<img :src="'/profile/' + user.usr_foto" alt="Profile" />
+			<img :src="'/profile/' + user.usr_image" alt="Profile" />
 		</div>
 		<button class="p-link layout-profile-link" @click="onClick">
 			<span class="username">{{user.usr_name}}</span>

@@ -58,10 +58,9 @@ __webpack_require__.r(__webpack_exports__);
             localStorage.clear();
             localStorage.setItem("loggedIn", "true");
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("id", response.data.id);
             localStorage.setItem("usr_name", response.data.usr_name);
             setTimeout(function () {
-              return _this.$router.push('/');
+              return _this.$router.push('/dashboard');
             }, 1000);
           })["catch"](function (error) {
             if (error.response.status == 422) {

@@ -16,7 +16,7 @@
         </div>
 
         <AppProfile />
-        <AppMenu :model="menuUser" @menuitem-click="onMenuItemClick" />
+        <AppMenu :model="menuAdmin" @menuitem-click="onMenuItemClick" />
       </div>
     </transition>
 
@@ -44,38 +44,42 @@ import AppFooter from '../AppFooter.vue';
 export default {
   data() {  
     return {
-      id: null,
-      token: null,
       loggedIn : null,
       layoutMode: "static",
       layoutColorMode: "dark",
       staticMenuInactive: false,
       overlayMenuActive: false,
       mobileMenuActive: false,
-      menuUser:[],
-      role:[],
       menuAdmin: [
-        { label: "Dashboard", icon: "pi pi-fw pi-home", to: "/Dashboard" },
+        { label: "Dashboard", icon: "pi pi-fw pi-home", to: "/dashboard" },
         {
-          label: 'Peripheral', icon: 'pi pi-fw pi-sitemap',
+          label: 'EMP BENTU', icon: 'pi pi-fw pi-sitemap',
           	items: [
-               { label: "Master Peripheral", icon: "pi pi-fw pi-th-large", to: "/master-peripheral" },
-               { label: "Mutasi Peripheral", icon: "pi pi-fw pi-bookmark", to: "/mutasi-peripheral" },
-               { label: "Pembelian Peripheral", icon: "pi pi-fw pi-bars", to: "/pembelian-peripheral" },
+              { label :'RFM', icon: 'pi pi-fw pi-sitemap',
+                items:[
+                    { label : 'My RFM','icon': 'pi pi-fw pi-sitemap',to:''},
+                    { label : 'All RFM','icon': 'pi pi-fw pi-sitemap',to:''},
+                ]
+              },
+              { label : 'RFS', icon: 'pi pi-fw pi-sitemap',
+                items:[
+                  { label : 'My RFS','icon': 'pi pi-fw pi-sitemap',to:'/my-rfs-bentu'},
+                  { label : 'All RFS','icon': 'pi pi-fw pi-sitemap',to:'/all-rfs-bentu'},
+                ]
+              },
+              { label : 'AMANDEMENT', icon: 'pi pi-fw pi-sitemap',
+                items:[
+                  { label : 'Amandement Contract','icon': 'pi pi-fw pi-sitemap',to:''},
+                  { label : 'Amandement Purchace Order','icon': 'pi pi-fw pi-sitemap',to:''},
+                  { label : 'Amandement Service Order','icon': 'pi pi-fw pi-sitemap',to:''},
+                  
+                ]
+              }
             ]
         },
-        { label: "Referensi", icon: 'pi pi-fw pi-list', 
-            items: [
-               { label: "Referensi Supplier", icon: "pi pi-fw pi-briefcase", to: "/referensi-supplier" },
-               { label: "Referensi Lookups ", icon: "pi pi-fw pi-clone", to: "/referensi-lookups" },
-            ]
-        },
-        { label: "ICT request", icon: "pi pi-fw pi-ticket", to: "/ict-request" },
-        { label: "Cash Advance", icon: "pi pi-fw pi-money-bill", to: "/cash-advance" },
       ],
     };
   },
-  
   created(){
     this.cekRole();
   },
@@ -83,26 +87,14 @@ export default {
     $route() {
       this.menuActive = false;
       this.$toast.removeAllGroups();
-      // this.cekRole();
+      this.cekRole();
     },
 },
   methods: {
     cekRole(){
       this.loggedIn = localStorage.getItem("loggedIn");
-      if(!this.loggedIn){
-        this.role = [];
-        this.menuId = [];
-        this.menuUser = [];
-        this.$router.push('/login');
-      }
-      else if(this.loggedIn){
-        if(!this.menuUser.length){
-          this.id = localStorage.getItem("id");
-          this.token = localStorage.getItem("token");
-          this.axios.get('/api/get-rolee/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.menuUser = response.data;
-          });
-        }
+      if (!this.loggedIn){
+       this.$router.push('/login')
       }
     },
     onWrapperClick() {

@@ -2,38 +2,23 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use Notifiable,HasApiTokens;
     protected $fillable = [
-        'name', 'email', 'password',
+        'usr_id',
+        'usr_name',
+        'usr_fullname',
+        'usremail',
+        'usr_passwd', 
+        'usr_image'
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $table = 'mng_user';
+    protected $primaryKey = 'usr_id';
+    public $incrementing = false;
+    public $timestamps = false;
 }
